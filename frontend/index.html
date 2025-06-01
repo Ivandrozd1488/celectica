@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ANKI BAGS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <!-- Добавляем иконку для устранения 404 ошибки -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+    <div id="app">
+        <!-- Контент будет загружаться динамически -->
+        <div class="loader" id="loader">Загрузка...</div>
+        
+        <div class="container" id="main-screen" style="display:none;">
+            <header class="anki-header">
+                <h1>ANKI BAGS</h1>
+                <div class="clover">🍀️</div>
+            </header>
+            
+            <div class="menu">
+                <button class="btn-menu" data-page="catalog">👜 КАТАЛОГ</button>
+                <button class="btn-menu" data-page="cart">🛒 КОРЗИНА</button>
+                <button class="btn-menu" data-page="about">ℹ О МАГАЗИНЕ</button>
+            </div>
+            
+            <div class="footer">
+                <div class="exclusive">Эксклюзивные товары от производителя</div>
+                <div class="delivery">Бесплатная доставка от 15 000₽</div>
+            </div>
+        </div>
+        
+        <div class="container" id="catalog-screen" style="display:none;">
+            <header class="sub-header">
+                <button class="btn-back" data-back="main">←</button>
+                <h2>КАТАЛОГ</h2>
+            </header>
+            
+            <div class="categories" id="categories">
+                <!-- Категории будут загружены через JS -->
+            </div>
+            
+            <div class="products" id="products">
+                <!-- Товары будут загружены через JS -->
+            </div>
+        </div>
+        
+        <div class="container" id="product-screen" style="display:none;">
+            <header class="sub-header">
+                <button class="btn-back" data-back="catalog">←</button>
+                <h2 id="product-title">ТОВАР</h2>
+            </header>
+            
+            <div class="product-detail" id="product-detail">
+                <!-- Детали товара будут загружены через JS -->
+            </div>
+        </div>
+        
+        <div class="container" id="cart-screen" style="display:none;">
+            <header class="sub-header">
+                <button class="btn-back" data-back="main">←</button>
+                <h2>КОРЗИНА</h2>
+            </header>
+            
+            <div class="cart-items" id="cart-items">
+                <!-- Товары в корзине -->
+            </div>
+            
+            <div class="cart-total">
+                ИТОГО: <span id="total-price">0</span> p.
+            </div>
+            
+            <button class="btn-buy" id="checkout-btn">🚀 ОФОРМИТЬ ЗАКАЗ</button>
+        </div>
+    </div>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/app.js"></script>
+    <script>
+        // Обеспечиваем доступность initApp перед вызовом
+        window.initApp = function() {
+            // Проверка доступности SDK
+            if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+                // Если SDK загружен, инициализируем приложение
+                const app = new AnkiApp();
+                app.init();
+            } else {
+                console.error('Telegram WebApp SDK не загружен!');
+                // Создаем заглушку для отладки
+                window.Telegram = {
+                    WebApp: {
+                        initData: '',
+                        initDataUnsafe: { 
+                            user: { 
+                                id: 12345, 
+                                username: 'test_user',
+                                first_name: 'Test',
+                                last_name: 'User'
+                            } 
+                        },
+                        ready: () => console.log('Telegram ready'),
+                        expand: () => console.log('Expanded'),
+                        MainButton: {
+                            show: () => console.log('MainButton shown'),
+                            hide: () => console.log('MainButton hidden'),
+                            setText: (t) => console.log('Text set:', t),
+                            onClick: (h) => console.log('Click handler set'),
+                            setParams: (p) => console.log('Params set:', p)
+                        }
+                    }
+                };
+                
+                // Инициализируем приложение с заглушкой
+                const app = new AnkiApp();
+                app.init();
+            }
+        };
+
+        // Инициализируем приложение после загрузки страницы
+        document.addEventListener('DOMContentLoaded', window.initApp);
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: anki-shop
+    runtime: python
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "gunicorn backend.app:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.7
+    staticSites:
+      - name: frontend
+        buildCommand: "echo 'Frontend built'"
+        publishPath: "/frontend"
